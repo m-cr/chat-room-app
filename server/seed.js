@@ -9,8 +9,10 @@ const Promise = require('sequelize').Promise;
 const seed = () => {
 
   const user = User.create({
+    userName: 'Demo User',
     email: 'demo@demo.com',
-    password: 'demo'
+    password: 'demo',
+    lastLogout: Date.now()
   });
 
   const message = Message.create({
