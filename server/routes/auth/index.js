@@ -5,6 +5,10 @@ const User = require('../../db').models.User;
 
 module.exports = router;
 
+//post to login
+//if user found, send back sanitized user
+//if no found user, one is created, sanitized version sent back
+//if incorrect credentials, send back error message
 router.post('/', (req, res, next) => {
   User.findOne({
     where: { email: req.body.email }

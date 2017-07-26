@@ -6,6 +6,7 @@ const Message = require('../../db').models.Message;
 
 module.exports = router;
 
+//fetch all
 router.get('/messages', (req, res, next) => {
   Message.findAll({
     include: [
@@ -21,6 +22,7 @@ router.get('/messages', (req, res, next) => {
   .catch(next);
 });
 
+//fetch all new for user
 router.get('/messages/:userId', (req, res, next) => {
   User.findById(req.params.userId)
   .then( foundUser => {
@@ -44,6 +46,7 @@ router.get('/messages/:userId', (req, res, next) => {
   .catch(next);
 });
 
+//post
 router.post('/messages', (req, res, next) => {
   console.log('endpoint hit');
   User.findById(req.body.userId)
@@ -58,63 +61,3 @@ router.post('/messages', (req, res, next) => {
   })
   .catch(next);
 });
-
-// router.get('/messages/new', (req, res, next) => {
-//   Message.findAll({
-//     where: {
-//       createdAt: {
-//         $gt: req.user.lastLogout,
-//       },
-//     },
-//     include: [
-//       { model: User, attributes: ['username', 'avatar'] },
-//       { model: Chatroom, attributes: ['name'] },
-//     ],
-//     order: [
-//       ['createdAt', 'ASC'],
-//     ],
-//   })
-//   .then((foundMessages) => {
-//     res.send(foundMessages);
-//   })
-//   .catch(next);
-// });
-
-// // GET request to get all messages of a chatroom
-// router.get('/:chatroomId/messages', (req, res, next) => {
-//   Message.findAll({
-//     where: {
-//       chatroomId: req.params.chatroomId,
-//     },
-//     include: [
-//       { model: User, attributes: ['username', 'avatar'] },
-//       { model: Chatroom, attributes: ['name'] },
-//     ],
-//     order: [
-//       ['createdAt', 'ASC'],
-//     ],
-//   })
-//   .then((foundMessages) => {
-//     res.send(foundMessages);
-//   })
-//   .catch(next);
-// });
-
-// // POST request to add a message
-// router.post('/:chatroomId/messages', (req, res, next) => {
-//   User.findById(req.body.userId)
-//   .then((foundUser) => {
-//     return Message.create(req.body)
-//       .then((createdMessage) => {
-//         const createdMessageInJSON = createdMessage.toJSON();
-//         createdMessageInJSON.user = foundUser;
-//         return createdMessageInJSON;
-//       });
-//   })
-//   .then((completeMessage) => {
-//     res.send(completeMessage);
-//   })
-//   .catch(next);
-// });
-
-// module.exports = router;
