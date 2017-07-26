@@ -24,6 +24,9 @@ module.exports = db.define('user', {
   },
   salt: {
     type: db.Sequelize.STRING
+  },
+  lastLogout: {
+    type: db.Sequelize.DATE
   }
 }, {
   instanceMethods: {
