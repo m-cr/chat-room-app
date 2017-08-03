@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-const router = require('express').Router();
-const User = require('../../db').models.User;
-const Message = require('../../db').models.Message;
+const router = require('express').Router()
+const User = require('../../db').models.User
+const Message = require('../../db').models.Message
 
-module.exports = router;
+module.exports = router
 
 //fetch all
 router.get('/messages', (req, res, next) => {
@@ -16,48 +16,50 @@ router.get('/messages', (req, res, next) => {
       ['createdAt', 'ASC'],
     ],
   })
-  .then( foundMessages => {
-    res.send(foundMessages);
-  })
-  .catch(next);
-});
+    .then( foundMessages => {
+      res.send(foundMessages)
+    })
+    .catch(next)
+})
 
 //fetch all new for user
 router.get('/messages/:userId', (req, res, next) => {
   User.findById(req.params.userId)
-  .then( foundUser => {
-    Message.findAll({
-      where: {
-        createdAt: {
-          $gt: foundUser.lastLogout,
+    .then( foundUser => {
+      Message.findAll({
+        where: {
+          createdAt: {
+            $gt: foundUser.lastLogout,
+          },
         },
-      },
-      include: [
-        { model: User, attributes: ['userName'] },
-      ],
-      order: [
-        ['createdAt', 'ASC'],
-      ],
+        include: [
+          { model: User, attributes: ['userName'] },
+        ],
+        order: [
+          ['createdAt', 'ASC'],
+        ],
+      })
+        .then( foundMessages => {
+          res.send(foundMessages)
+        })
     })
-    .then( foundMessages => {
-      res.send(foundMessages);
-    });
-  })
-  .catch(next);
-});
+    .catch(next)
+})
 
 //post
 router.post('/messages', (req, res, next) => {
-  console.log('endpoint hit');
   User.findById(req.body.userId)
-  .then( foundUser => {
-    return Message.create({ content: req.body.message })
-      .then( createdMessage => {
-        return createdMessage.setUser(foundUser);
-      })
-      .then( linkedMessage => {
-        res.send(linkedMessage);
-      });
-  })
-  .catch(next);
-});
+    .then( foundUser => {
+      let sanitizedUser = foundUser.sanitize()
+      return Message.create({ content: req.body.message })
+        .then( createdMessage => {
+          return createdMessage.setUser(foundUser)
+        })
+        .then( linkedMessage => {
+          var jsonMessage = linkedMessage.toJSON()
+          jsonMessage.user = sanitizedUser
+          res.send(jsonMessage)
+        })
+    })
+    .catch(next)
+})

@@ -1,8 +1,8 @@
-'use strict';
-const db = require('./_db');
+'use strict'
+const db = require('./_db')
 
-const User = require('./models/user.js');
-const Message = require('./models/message.js');
+const User = require('./models/user.js')
+const Message = require('./models/message.js')
 
 module.exports = {
   db,
@@ -10,7 +10,7 @@ module.exports = {
     User,
     Message
   }
-};
+}
 
-Message.belongsTo(User);
-User.hasMany(Message);
+Message.belongsTo(User)
+User.hasMany(Message)

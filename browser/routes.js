@@ -1,16 +1,29 @@
-import React from 'react';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-import App from './components/app';
-import Chat from './components/chat';
-import Login from './components/login';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Router, Route, browserHistory } from 'react-router'
+import App from './app'
+import Chat from './Chat'
 
-const Routes = () => (
+import { fetchLoggedInUser } from './Login/LoginActions'
+import { fetchMessages } from './Chat/ChatActions'
+
+const Routes = ({ checkLoggedInUser, fetchAllMessages }) => (
   <Router history={ browserHistory }>
-    <Route path="/" component={ App } >
-      <IndexRoute component={ Login } />
-      <Route path='/chat' component={ Chat } />
+    <Route path="/" component={ App } onEnter={ checkLoggedInUser }>
+      <Route path='/chat' component={ Chat } onEnter={ fetchAllMessages } />
     </Route>
   </Router>
-);
+)
 
-export default Routes;
+const mapStateToProps = null
+
+const mapDispatchToProps = (dispatch) => ({
+  checkLoggedInUser() {
+    dispatch(fetchLoggedInUser())
+  },
+  fetchAllMessages() {
+    dispatch(fetchMessages())
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routes)
