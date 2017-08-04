@@ -77,6 +77,10 @@ header {
   border-radius: 5px;
 }
 
+.outgoingMessage:hover, .incomingMessage:hover {
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+}
+
 .outgoingMessage {
   text-align: right;
   background-color: lightskyblue;

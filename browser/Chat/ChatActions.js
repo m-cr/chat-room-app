@@ -14,6 +14,7 @@ export const addNewMessage = message => ({
   message
 })
 
+//fetch all messages
 export const fetchMessages = () => dispatch => (
   axios.get('/api/chat/messages')
     .then(res => res.data)
@@ -22,6 +23,7 @@ export const fetchMessages = () => dispatch => (
     })
 )
 
+//post new message, emit socket event
 export const addNewChatMessage = (newMessage, userId) => dispatch => (
   axios.post('/api/chat/messages', { message: newMessage, userId })
     .then(res => res.data)

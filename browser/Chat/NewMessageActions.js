@@ -7,6 +7,7 @@ export const loadFirstNewMessage = firstNew => ({
   firstNew
 })
 
+//fetch new messages for user
 export const fetchNewMessages = () => dispatch => ( 
   axios.get('/api/chat/messages/new')
     .then(res => res.data)

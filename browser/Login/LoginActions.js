@@ -8,6 +8,7 @@ export const authenticate = user => ({
   user
 })
 
+//login
 export const login = (userName, password) => (dispatch) => (
   axios.post('/api/auth/login', { userName, password })
     .then(res => res.data)
@@ -15,12 +16,14 @@ export const login = (userName, password) => (dispatch) => (
     .then(() => browserHistory.push('/chat'))
 )
 
+//logout
 export const logout = () => (dispatch) => (
   axios.post('/api/auth/logout')
     .then(() => dispatch(authenticate(null)))
     .then(() => browserHistory.push('/'))
 )
 
+//fetch user if there is one logged into session
 export const fetchLoggedInUser = () => (dispatch) => (
   axios.get('/api/auth/user')
     .then(res => res.data)

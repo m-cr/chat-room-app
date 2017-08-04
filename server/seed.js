@@ -7,7 +7,7 @@ const Message = models.Message
 const Promise = require('sequelize').Promise
 
 const seed = () => {
-
+  //users
   const user = User.create({
     userName: 'demo',
     password: 'demo',
@@ -20,6 +20,7 @@ const seed = () => {
     lastLogout: Date.now()
   })
 
+  //messages
   const message = Message.create({
     content: 'Message Content'
   })
@@ -44,6 +45,7 @@ const seed = () => {
     content: 'Message5 Content'
   })
 
+  //complete promises and connect users to messages
   return Promise.all([user, user2, message, message1, message2, message3, message4, message5])
     .spread( (user, user2, message, message1, message2, message3, message4, message5) => {
       return Promise.all([

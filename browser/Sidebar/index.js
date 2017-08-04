@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { logout } from '../Login/LoginActions'
 import { getUser } from '../Login/LoginReducer'
 
+//if user logged in render username and logout button
 const Sidebar = ({ user, logout }) => (
   <div className='sidebar'>
     { user && 

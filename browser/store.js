@@ -5,6 +5,7 @@ import io from 'socket.io-client'
 import { createLogger  } from 'redux-logger'
 import { addNewMessage } from './Chat/ChatActions'
 
+//create store with logging and thunk middleware for async
 const store = createStore(reducer, applyMiddleware(createLogger({ collapsed: true }), thunk))
 
 export default store
