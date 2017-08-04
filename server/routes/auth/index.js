@@ -5,6 +5,7 @@ const User = require('../../db').models.User
 
 module.exports = router
 
+//get user from session
 router.get('/user', (req, res, next) => {
   if(req.session && req.session.user){
     res.send(req.session.user)
@@ -12,6 +13,7 @@ router.get('/user', (req, res, next) => {
   res.send('No logged in user')
 })
 
+//login
 router.post('/login', (req, res, next) => {
   User.findOne({
     where: { userName: req.body.userName }
@@ -37,6 +39,7 @@ router.post('/login', (req, res, next) => {
     .catch(next)
 })
 
+//logout, updated lastLogout, destroy session
 router.post('/logout', (req, res, next) => {
   User.findById(req.session.user.id)
     .then( loggedOutUser => {

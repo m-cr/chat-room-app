@@ -6,10 +6,11 @@ import Chat from './Chat'
 
 import { fetchLoggedInUser } from './Login/LoginActions'
 import { fetchMessages } from './Chat/ChatActions'
+import { fetchNewMessages } from './Chat/NewMessageActions.js'
 
 const Routes = ({ checkLoggedInUser, fetchAllMessages }) => (
   <Router history={ browserHistory }>
-    <Route path="/" component={ App } onEnter={ checkLoggedInUser }>
+    <Route path='/' component={ App } onEnter={ checkLoggedInUser }>
       <Route path='/chat' component={ Chat } onEnter={ fetchAllMessages } />
     </Route>
   </Router>
@@ -23,6 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchAllMessages() {
     dispatch(fetchMessages())
+    dispatch(fetchNewMessages())
   }
 })
 

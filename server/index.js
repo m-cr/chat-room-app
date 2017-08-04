@@ -42,11 +42,9 @@ app.use( (err, req, res, next) => {
 })
 
 //start up server
+const server = app.listen(3000, () => console.log('listening on port 3000'))
 
-const server = app.listen(3000, () => console.log('listening on port 3000'));
+//sockets
 const io = require('socket.io')(server)
-io.on('connection', function(){ 
-  console.log('a user connected')
-})
-// const socketEvents = require('./socketEvents')
-// socketEvents(io)
+const socketEvents = require('./socketEvents')
+socketEvents(io)

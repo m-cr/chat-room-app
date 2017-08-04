@@ -11,8 +11,6 @@ const Sidebar = ({ user, logout }) => (
         <div className='logout'>
           <button type='submit' onClick={ logout }>Logout</button>
         </div>
-        <hr />
-        <div className='users'>Users:</div>
       </div>
     }
   </div>

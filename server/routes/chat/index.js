@@ -23,8 +23,8 @@ router.get('/messages', (req, res, next) => {
 })
 
 //fetch all new for user
-router.get('/messages/:userId', (req, res, next) => {
-  User.findById(req.params.userId)
+router.get('/messages/new', (req, res, next) => {
+  User.findById(req.session.user.id)
     .then( foundUser => {
       Message.findAll({
         where: {

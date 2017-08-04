@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { addNewChatMessage } from './ChatActions'
 import { getMessages } from './ChatReducer'
+import { getFirstNewMessage } from './NewMessageReducer'
 import { getUserName, getUserId } from '../Login/LoginReducer'
 
 class Chat extends Component {
@@ -34,14 +35,37 @@ class Chat extends Component {
   }
 
   render() {
-    const { messages } = this.props
+    const { messages, firstNewMessage } = this.props
     return (
       <div className="chat">
-        <div className="messages">
+        <div className="messageList">
           {messages.map( (message, idx) => (
-            <p key={idx} ref={ (ref) => { if (idx === messages.length - 1) {this.chatBottomRef = ref }}}>
-              {message.user.userName}: {message.content}
-            </p>
+            <div key={idx} ref={ (ref) => { if (idx === messages.length - 1) {this.chatBottomRef = ref }}}>
+              { 
+                firstNewMessage && message.id == firstNewMessage.id 
+                  ? 
+                  <div>
+                    <p className='newMessages'>New Messages</p>
+                    <hr />
+                  </div> 
+                  : '' 
+              }
+              { 
+                (message.userId === this.props.userId) 
+                  ?
+                  <div className="outgoingMessage">
+                    <p>
+                      {message.content}
+                    </p>
+                    <span className="messageDate">{ this.parseDate(message.createdAt) }</span>
+                  </div>
+                  :
+                  <div className="incomingMessage">
+                    <p> {message.user.userName}: <span className="messageDate">{ this.parseDate(message.createdAt) }</span></p>
+                    <p> {message.content} </p>
+                  </div>
+              }
+            </div>
           ))}        
         </div> 
         <div className="messageForm">
@@ -57,7 +81,8 @@ class Chat extends Component {
 const mapStateToProps = state => ({
   messages: getMessages(state),
   userId: getUserId(state),
-  userName: getUserName(state)
+  userName: getUserName(state),
+  firstNewMessage: getFirstNewMessage(state)
 })
 
 const mapDispatchToProps = { addNewChatMessage }

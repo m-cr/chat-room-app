@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import LoginReducer from './Login/LoginReducer'
 import ChatReducer from './Chat/ChatReducer'
+import NewMessageReducer from './Chat/NewMessageReducer'
 
 const rootReducer = combineReducers({
   user: LoginReducer,
-  messages: ChatReducer
+  messages: ChatReducer,
+  firstNew: NewMessageReducer
 })
 
 export default rootReducer

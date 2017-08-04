@@ -13,6 +13,4 @@ const reducer = (state= [], action) => {
 
 export default reducer
 
-export const getMessages = state => {
-  return state.messages 
-}
+export const getMessages = state => state.messages
