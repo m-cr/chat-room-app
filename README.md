@@ -1,4 +1,4 @@
-## Chat Room App
+## The Group Chat
 
 ### Set up commands
 
